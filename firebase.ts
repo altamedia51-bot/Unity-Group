@@ -1,29 +1,28 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
 
-// PERHATIAN: Ganti konfigurasi di bawah ini dengan konfigurasi dari Firebase Console Anda
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
+/**
+ * INSTRUKSI:
+ * Ganti isi variabel firebaseConfig di bawah ini dengan kode 
+ * yang Anda copy dari Firebase Console (Langkah 3 di atas).
+ */
 const firebaseConfig = {
-  apiKey: "API_KEY_ANDA_DISINI",
-  authDomain: "unity-group-project.firebaseapp.com",
-  projectId: "unity-group-project",
-  storageBucket: "unity-group-project.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID"
+  apiKey: "AIzaSyAU6xdw84Xdu4tYrqT7Hj2zheCdIZyVWwE",
+  authDomain: "unitigroup.firebaseapp.com",
+  projectId: "unitigroup",
+  storageBucket: "unitigroup.firebasestorage.app",
+  messagingSenderId: "238758531323",
+  appId: "1:238758531323:web:c85add4d1b32f12f16e05e",
+  measurementId: "G-5BHZF0GNBP"
 };
 
-// Initialize Firebase
-// Kita tambahkan try-catch agar aplikasi tidak crash jika config belum diisi (untuk demo UI)
-let app;
-let auth;
-let db;
+// Inisialisasi Firebase (Compat Mode for Auth support)
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth(); // Use compat auth instance
+const db = getFirestore(app); // Use modular firestore instance
+const storage = getStorage(app); // Use modular storage instance
 
-try {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-} catch (error) {
-    console.warn("Firebase belum dikonfigurasi dengan benar. UI akan berjalan dalam mode simulasi.");
-}
-
-export { auth, db };
+export { auth, db, storage };

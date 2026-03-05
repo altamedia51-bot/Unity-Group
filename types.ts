@@ -1,16 +1,28 @@
+
 import { ReactNode } from 'react';
 
 export interface ServiceItem {
   id: string;
   title: string;
   description: string;
-  icon: ReactNode;
+  icon?: ReactNode; // Icon dibuat optional karena sulit diserialize
+  iconName?: string; // Untuk referensi icon di CMS
+  details?: string[]; // Array string untuk rincian layanan (fitur Selengkapnya)
 }
 
 export interface FeatureItem {
   id: string;
   title: string;
   description: string;
+}
+
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+  image: string;
 }
 
 export interface NavItem {
@@ -33,8 +45,8 @@ export interface Order {
     date: string;
     status: 'Pending' | 'Proses' | 'Selesai' | 'Batal';
     price: string;
-    // Helper property to store numeric value for calculation
     rawPrice?: number; 
+    attachmentUrl?: string; // URL File Dokumen Pendukung
 }
 
 export interface ProjectStep {
@@ -51,4 +63,53 @@ export interface Project {
     currentStep: number;
     steps: ProjectStep[];
     lastUpdated: string;
+}
+
+// Tipe data untuk item Dokumentasi
+export interface DocumentationItem {
+    imageUrl: string;
+    caption: string;
+    category: 'handover' | 'partnership'; // Penyerahan Ijin atau Kemitraan
+}
+
+// Tipe data baru untuk Website Content
+export interface WebsiteContent {
+    // Global Settings
+    logoUrl: string; // URL Logo Website
+
+    hero: {
+        tagline: string;
+        headline: string;
+        subheadline: string;
+        description: string;
+        bannerImage: string; 
+    };
+    seasonal: {
+        isEnabled: boolean; 
+        title: string; // Judul umum untuk section ini (misal: "Promo Terbaru")
+        images: string[]; // Array string untuk menampung banyak URL foto
+    };
+    whyUs: {
+        images: string[]; 
+    };
+    documentation: {
+        title: string;
+        subtitle: string;
+        items: DocumentationItem[];
+    };
+    contact: {
+        address: string;
+        email: string;
+        phone: string;
+    };
+    testimonials: TestimonialItem[];
+    // Update: Tambahan Social Media
+    socialMedia: {
+        instagram: string;
+        facebook: string;
+        linkedin: string;
+        twitter: string;
+        whatsapp: string; // Nomor WA untuk floating button
+    };
+    services: ServiceItem[];
 }

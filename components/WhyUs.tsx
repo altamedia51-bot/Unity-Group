@@ -1,8 +1,11 @@
 import React from 'react';
 import { FEATURES } from '../constants';
 import { CheckCircle2 } from 'lucide-react';
+import { useContent } from '../contexts/ContentContext';
 
 const WhyUs: React.FC = () => {
+  const { content } = useContent();
+
   return (
     <section id="why-us" className="py-24 bg-slate-950 relative overflow-hidden">
         {/* Background blobs */}
@@ -38,29 +41,29 @@ const WhyUs: React.FC = () => {
             </div>
           </div>
 
-          {/* Visual Side */}
+          {/* Visual Side (Dynamic Images) */}
           <div className="w-full lg:w-1/2 relative">
             <div className="relative z-10 grid grid-cols-2 gap-4">
-                <div className="space-y-4 translate-y-8">
+                <div className="space-y-4 mt-8">
                      <img 
-                        src="https://picsum.photos/400/500?random=1" 
+                        src={content.whyUs.images[0]} 
                         alt="Office Luxury" 
                         className="w-full h-64 object-cover rounded-3xl opacity-80 hover:opacity-100 transition-opacity border border-white/10"
                     />
                      <img 
-                        src="https://picsum.photos/400/400?random=2" 
+                        src={content.whyUs.images[1]} 
                         alt="Discussion" 
                         className="w-full h-48 object-cover rounded-3xl opacity-80 hover:opacity-100 transition-opacity border border-white/10"
                     />
                 </div>
                 <div className="space-y-4">
                     <img 
-                        src="https://picsum.photos/400/400?random=3" 
+                        src={content.whyUs.images[2]} 
                         alt="Modern Building" 
                         className="w-full h-48 object-cover rounded-3xl opacity-80 hover:opacity-100 transition-opacity border border-white/10"
                     />
                      <img 
-                        src="https://picsum.photos/400/500?random=4" 
+                        src={content.whyUs.images[3]} 
                         alt="Success" 
                         className="w-full h-64 object-cover rounded-3xl opacity-80 hover:opacity-100 transition-opacity border border-white/10"
                     />

@@ -1,14 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Unity Group - Mitra Strategis Bisnis Anda</title>
-    <!-- Tailwind CSS (CDN) - Pastikan koneksi internet aktif saat membuka website ini -->
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Added Cinzel for Logo Font matching -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Midtrans Snap JS (Sandbox Mode) -->
     <script type="text/javascript"
       src="https://app.sandbox.midtrans.com/snap/snap.js"
@@ -20,6 +22,8 @@
           extend: {
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
+              // Font baru untuk Logo Text
+              serif: ['Cinzel', 'serif'],
             },
             colors: {
               gold: {
@@ -32,12 +36,15 @@
                 700: '#9A7D0A',
               },
               slate: {
-                950: '#020617', // Deep charcoal
+                950: '#020617', 
               }
             },
             animation: {
               'blob': 'blob 7s infinite',
               'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'fade-in': 'fadeIn 0.8s ease-out forwards',
+              'fade-in-down': 'fadeInDown 0.5s ease-out forwards',
+              'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
             },
             keyframes: {
               blob: {
@@ -49,6 +56,18 @@
               'pulse-glow': {
                 '0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(234, 179, 8, 0.5)' },
                 '50%': { opacity: '.9', boxShadow: '0 0 10px rgba(234, 179, 8, 0.2)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeInDown: {
+                '0%': { opacity: '0', transform: 'translateY(-20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               }
             }
           }
@@ -60,17 +79,28 @@
         background-color: #020617;
         color: white;
         margin: 0;
+        scrollbar-width: thin;
+        scrollbar-color: #D4AC0D #020617;
       }
+      
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #020617;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #D4AC0D, #9A7D0A);
+        border-radius: 10px;
+      }
+
       .glass-card {
         background: rgba(255, 255, 255, 0.03);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
-      .text-glow {
-        text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
-      }
-      /* Styles untuk Loading Awal */
+      
       #initial-loader {
         position: fixed;
         inset: 0;
@@ -80,41 +110,59 @@
         justify-content: center;
         align-items: center;
         z-index: 9999;
-        transition: opacity 0.5s ease-out;
       }
+
       .loader-spinner {
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(255, 255, 255, 0.1);
+        width: 60px;
+        height: 60px;
+        border: 2px solid rgba(234, 179, 8, 0.1);
         border-radius: 50%;
         border-top-color: #EAB308;
-        animation: spin 1s ease-in-out infinite;
+        animation: spin 0.8s linear infinite;
       }
+
       @keyframes spin {
         to { transform: rotate(360deg); }
       }
+      
+      /* Utility text glow for luxury feel */
+      .text-glow {
+        text-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+      }
+
+      .page-transition {
+        animation: fadeIn 0.5s ease-out;
+      }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "firebase/": "https://esm.sh/firebase@^12.8.0/",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
-  }
-}
-</script>
 </head>
   <body>
     <div id="root">
-        <!-- Tampilan Loading (Akan hilang otomatis saat Aplikasi dimuat) -->
         <div id="initial-loader">
             <div class="loader-spinner"></div>
-            <p style="margin-top: 20px; color: #94a3b8; font-family: sans-serif; font-size: 14px;">Memuat Aplikasi...</p>
+            <p style="margin-top: 24px; color: #EAB308; font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700;">Unity Group Luxury</p>
         </div>
     </div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      // Safety timeout in case React fails to mount or crash
+      setTimeout(() => {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+           // Check if root is empty (React didn't render)
+           const root = document.getElementById('root');
+           if (root && root.children.length <= 1) { // Only loader is inside
+               console.warn("App failed to mount, removing loader to show potential errors");
+               loader.style.display = 'none';
+               // Optional: Show an error message on screen
+               const errorDiv = document.createElement('div');
+               errorDiv.style.color = 'white';
+               errorDiv.style.textAlign = 'center';
+               errorDiv.style.marginTop = '50px';
+               errorDiv.innerHTML = '<p>Gagal memuat aplikasi. Silakan refresh halaman.</p>';
+               document.body.appendChild(errorDiv);
+           }
+        }
+      }, 8000); // 8 seconds timeout
+    </script>
   </body>
 </html>

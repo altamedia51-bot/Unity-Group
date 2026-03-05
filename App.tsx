@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -5,41 +6,52 @@ import Services from './components/Services';
 import WhyUs from './components/WhyUs';
 import Footer from './components/Footer';
 import { AuthForms } from './components/AuthForms';
-import { Dashboard } from './components/Dashboard';
 import { AdminDashboard } from './components/AdminDashboard';
-import { Checkout } from './components/Checkout';
+import { Dashboard } from './components/Dashboard'; // Client Dashboard
 import { UserProfile, Order } from './types';
+import { ContentProvider } from './contexts/ContentContext';
+import { SeasonalBanner } from './components/SeasonalBanner'; 
+import { Documentation } from './components/Documentation';
+import { Testimonials } from './components/Testimonials';
+import { FloatingContacts } from './components/FloatingContacts';
+import { Checkout } from './components/Checkout';
 
-type ViewState = 'landing' | 'login' | 'register' | 'dashboard' | 'admin' | 'checkout';
+type ViewState = 'landing' | 'login' | 'admin' | 'client' | 'checkout';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewState>('landing');
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [checkoutOrder, setCheckoutOrder] = useState<Order | null>(null);
 
-  const handleLoginSuccess = (role: 'user' | 'admin' = 'user') => {
+  const handleLoginSuccess = (role: 'user' | 'admin' = 'user', userData?: { uid: string; name: string; email: string; phone?: string }) => {
+    const uid = userData?.uid || 'USR-UNKNOWN';
+    
     setCurrentUser({
-        uid: role === 'admin' ? 'ADM-001' : 'USR-123',
-        displayName: role === 'admin' ? 'Admin Officer' : 'John Doe',
-        email: role === 'admin' ? 'admin@unity.id' : 'john@example.com',
+        uid: uid,
+        displayName: userData?.name || (role === 'admin' ? 'Administrator' : 'User'),
+        email: userData?.email || '',
         role: role,
-        referralCode: role === 'user' ? 'UNITY-JOHN' : undefined
+        phoneNumber: userData?.phone
     });
 
+    // Arahkan sesuai Role
     if (role === 'admin') {
         setCurrentView('admin');
     } else {
-        setCurrentView('dashboard');
+        setCurrentView('client');
     }
   };
 
   const handleLogout = () => {
+      import('./firebase').then(({ auth }) => {
+          if(auth) auth.signOut();
+      });
       setCurrentUser(null);
       setCurrentView('landing');
   };
 
   const handleCheckout = (order: Order) => {
-      setSelectedOrder(order);
+      setCheckoutOrder(order);
       setCurrentView('checkout');
   };
 
@@ -48,45 +60,50 @@ function App() {
         case 'admin':
             return <AdminDashboard onLogout={handleLogout} />;
 
-        case 'dashboard':
+        case 'client':
             return <Dashboard user={currentUser} onLogout={handleLogout} onCheckout={handleCheckout} />;
-        
+
         case 'checkout':
-            if (!selectedOrder) return <Dashboard user={currentUser} onLogout={handleLogout} onCheckout={handleCheckout} />;
+            if (!checkoutOrder) return <Dashboard user={currentUser} onLogout={handleLogout} onCheckout={handleCheckout} />;
             return (
                 <Checkout 
-                    order={selectedOrder} 
-                    onBack={() => setCurrentView('dashboard')} 
-                    onPaymentSuccess={() => setCurrentView('dashboard')}
+                    order={checkoutOrder} 
+                    onBack={() => setCurrentView('client')}
+                    onPaymentSuccess={() => {
+                        // Refresh logic could go here
+                    }}
                 />
             );
 
         case 'login':
-            return <AuthForms mode="login" onLoginSuccess={handleLoginSuccess} onSwitchMode={setCurrentView} />;
-        
-        case 'register':
-            return <AuthForms mode="register" onLoginSuccess={handleLoginSuccess} onSwitchMode={setCurrentView} />;
+            return <AuthForms onLoginSuccess={handleLoginSuccess} onCancel={() => setCurrentView('landing')} />;
         
         case 'landing':
         default:
             return (
                 <>
-                    <Navbar onNavigate={setCurrentView} />
+                    <Navbar onNavigate={(view) => setCurrentView(view as any)} />
                     <main>
+                        <SeasonalBanner /> 
                         <Hero />
                         <Services />
                         <WhyUs />
+                        <Documentation />
+                        <Testimonials />
+                        <FloatingContacts />
                     </main>
-                    <Footer />
+                    <Footer onNavigate={(view) => setCurrentView(view as any)} />
                 </>
             );
     }
   };
 
   return (
-    <div className="bg-slate-950 min-h-screen text-white font-sans selection:bg-yellow-500/30 selection:text-yellow-200">
-      {renderContent()}
-    </div>
+    <ContentProvider>
+        <div className="bg-slate-950 min-h-screen text-white font-sans selection:bg-yellow-500/30 selection:text-yellow-200">
+        {renderContent()}
+        </div>
+    </ContentProvider>
   );
 }
 
