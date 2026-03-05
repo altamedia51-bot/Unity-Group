@@ -61,11 +61,6 @@ export const Testimonials: React.FC = () => {
                 </p>
 
                 <div className="flex items-center gap-4 mt-auto">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="w-12 h-12 rounded-full object-cover border-2 border-yellow-500/20"
-                  />
                   <div>
                     <h4 className="text-white font-bold text-sm">{item.name}</h4>
                     <p className="text-slate-500 text-xs">{item.role}</p>

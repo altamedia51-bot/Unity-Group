@@ -890,17 +890,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                                         ))}
                                                     </select>
                                                 </div>
-                                                <div>
-                                                    <label className="block text-slate-400 text-xs font-medium mb-1">URL Foto Profil</label>
-                                                    <div className="flex gap-2">
-                                                        <input 
-                                                            value={item.image} 
-                                                            onChange={(e) => handleTestimonialChange(idx, 'image', e.target.value)} 
-                                                            className="flex-1 bg-slate-950 border border-white/10 rounded px-3 py-2 text-blue-300 font-mono text-xs focus:border-yellow-500/50 outline-none" 
-                                                        />
-                                                        <img src={item.image} alt="Preview" className="w-9 h-9 rounded-full object-cover border border-white/10 bg-slate-800" />
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     ))}
