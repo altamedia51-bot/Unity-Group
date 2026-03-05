@@ -48,6 +48,7 @@ export const Documentation: React.FC = () => {
                 grabCursor={true}
                 centeredSlides={true}
                 loop={true}
+                loopAdditionalSlides={3}
                 slidesPerView={'auto'}
                 coverflowEffect={{
                     rotate: 0,
@@ -81,7 +82,7 @@ export const Documentation: React.FC = () => {
                         effect: 'slide',
                     },
                     1024: {
-                        slidesPerView: 3,
+                        slidesPerView: 'auto',
                         spaceBetween: 40,
                         effect: 'coverflow', // Enable coverflow on desktop
                     },
