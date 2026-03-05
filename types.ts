@@ -76,6 +76,7 @@ export interface DocumentationItem {
 export interface WebsiteContent {
     // Global Settings
     logoUrl: string; // URL Logo Website
+    footerBrandImage?: string; // Gambar pengganti teks "UNITY GROUP" di footer
     footerDescription: string; // Deskripsi singkat perusahaan di Footer
 
     hero: {

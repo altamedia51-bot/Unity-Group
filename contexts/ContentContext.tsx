@@ -17,6 +17,7 @@ import {
 
 const defaultContent: WebsiteContent = {
     logoUrl: "https://placehold.co/100x100/EAB308/000000?text=U&font=montserrat", 
+    footerBrandImage: "", // Default kosong, akan menampilkan teks "UNITY GROUP"
     footerDescription: "Mitra terpercaya untuk solusi bisnis terintegrasi. Menghubungkan visi Anda dengan realitas kesuksesan melalui layanan profesional kelas dunia.",
     hero: {
         tagline: "🚀 Solusi Bisnis Terintegrasi No. 1",

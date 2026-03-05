@@ -25,7 +25,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           {/* Brand Info */}
           <div>
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-6 flex items-center gap-6">
                  {/* Logo Footer Bigger */}
                  <div className="relative">
                     <img 
@@ -35,7 +35,15 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     />
                     <span className="absolute -top-1 -right-3 text-[10px] text-slate-500 font-sans font-bold">TM</span>
                  </div>
-                <span className="font-serif font-bold text-xl text-yellow-500 tracking-wider">UNITY GROUP</span>
+                {content.footerBrandImage ? (
+                    <img 
+                        src={content.footerBrandImage} 
+                        alt="Unity Group Brand" 
+                        className="h-12 w-auto object-contain" 
+                    />
+                ) : (
+                    <span className="font-serif font-bold text-xl text-yellow-500 tracking-wider">UNITY GROUP</span>
+                )}
             </div>
             
             <p className="text-slate-500 text-sm leading-relaxed mb-6">

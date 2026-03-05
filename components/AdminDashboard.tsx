@@ -752,6 +752,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                         </div>
                                     </div>
 
+                                    {/* Footer Brand Image */}
+                                    <div className="flex flex-col md:flex-row gap-6 items-start">
+                                        <div className="flex-1 w-full">
+                                            <label className="block text-slate-400 text-sm font-medium mb-2 flex items-center gap-2">
+                                                <ImageIcon size={14} /> URL Gambar Brand Footer (Opsional)
+                                            </label>
+                                            <input 
+                                                value={editorState.footerBrandImage || ''} 
+                                                onChange={(e) => setEditorState({...editorState, footerBrandImage: e.target.value})} 
+                                                className="w-full bg-slate-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-yellow-500/50 outline-none font-mono text-xs text-blue-300" 
+                                                placeholder="Biarkan kosong untuk menggunakan teks 'UNITY GROUP'"
+                                            />
+                                            <p className="text-xs text-slate-500 mt-1">Jika diisi, teks "UNITY GROUP" di footer akan diganti dengan gambar ini.</p>
+                                        </div>
+                                        {editorState.footerBrandImage && (
+                                            <div className="shrink-0 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
+                                                <p className="text-xs text-slate-500 mb-2">Preview Brand</p>
+                                                <img src={editorState.footerBrandImage} alt="Brand" className="h-8 w-auto object-contain mx-auto" />
+                                            </div>
+                                        )}
+                                    </div>
+
                                     {/* Footer Description */}
                                     <div>
                                         <label className="block text-slate-400 text-sm font-medium mb-2 flex items-center gap-2">
