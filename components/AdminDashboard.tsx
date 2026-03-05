@@ -97,6 +97,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
     // Optimistic UI state
     const [localStatusOverrides, setLocalStatusOverrides] = useState<Record<string, string>>({});
 
+    const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+
     // --- PROJECT MANAGEMENT STATES ---
     const [realtimeProjects, setRealtimeProjects] = useState<any[]>([]);
 
@@ -749,6 +751,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                             <img src={editorState.logoUrl} alt="Logo" className="h-10 w-auto object-contain mx-auto" />
                                         </div>
                                     </div>
+
+                                    {/* Footer Description */}
+                                    <div>
+                                        <label className="block text-slate-400 text-sm font-medium mb-2 flex items-center gap-2">
+                                            <FileText size={14} /> Deskripsi Footer
+                                        </label>
+                                        <textarea 
+                                            value={editorState.footerDescription || ''} 
+                                            onChange={(e) => setEditorState({ ...editorState, footerDescription: e.target.value })}
+                                            className="w-full bg-slate-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-yellow-500/50 outline-none text-sm h-24 resize-none"
+                                            placeholder="Masukkan deskripsi singkat perusahaan..."
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
@@ -775,7 +790,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                                 <label className="block text-slate-400 text-xs font-medium mb-1">Judul Promo (Kecil)</label>
                                                 <input value={editorState.seasonal.title} onChange={changeSeasonalTitle} className="w-full bg-slate-950 border border-white/10 rounded px-3 py-2 text-white text-sm" />
                                             </div>
-                                            <div className="space-y-3">
+                                            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                                                 {editorState.seasonal.images.map((img, idx) => (
                                                     <div key={idx} className="flex gap-4 items-center">
                                                         <span className="text-slate-500 text-xs font-mono w-6 text-center">{idx + 1}.</span>
@@ -801,7 +816,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                         <Plus size={14} /> Tambah Testimoni
                                     </Button>
                                 </h3>
-                                <div className="space-y-6">
+                                <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                                     {(editorState.testimonials || TESTIMONIALS).map((item, idx) => (
                                         <div key={item.id} className="p-4 bg-white/5 rounded-lg border border-white/5 relative group">
                                             <button 
@@ -986,10 +1001,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-4">
-                                        {editorState.documentation.items.map((item, idx) => (
-                                            <div key={idx} className="flex gap-4 items-start p-4 bg-white/5 rounded-lg border border-white/5 relative group">
-                                                <img src={item.imageUrl} alt="" className="w-20 h-20 object-cover rounded bg-black" />
+                                    <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                                            {editorState.documentation.items.map((item, idx) => (
+                                                <div key={idx} className="flex gap-4 items-start p-4 bg-white/5 rounded-lg border border-white/5 relative group">
+                                                <img 
+                                                    src={item.imageUrl} 
+                                                    alt="" 
+                                                    className="w-20 h-20 object-cover rounded bg-black cursor-zoom-in hover:opacity-80 transition-opacity"
+                                                    onClick={() => setZoomedImage(item.imageUrl)}
+                                                />
                                                 <div className="flex-1 space-y-3">
                                                     <input 
                                                         value={item.imageUrl} 
@@ -1003,20 +1024,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                                         placeholder="Caption / Keterangan"
                                                         className="w-full bg-slate-950 border border-white/10 rounded px-3 py-2 text-white text-sm" 
                                                     />
-                                                     <select
-                                                        value={item.category}
-                                                        onChange={(e) => handleDocChange(idx, 'category', e.target.value)}
-                                                        className="bg-slate-950 border border-white/10 rounded px-3 py-2 text-slate-300 text-xs"
-                                                    >
-                                                        <option value="handover">Serah Terima</option>
-                                                        <option value="partnership">Kemitraan</option>
-                                                    </select>
                                                 </div>
                                                 <button onClick={() => removeDocItem(idx)} className="text-slate-600 hover:text-red-400 p-2">
                                                     <Trash2 size={16} />
                                                 </button>
                                             </div>
                                         ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1050,6 +1064,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                                  <Phone size={14} className="text-slate-500" />
                                                  <input name="phone" value={editorState.contact.phone} onChange={handleContactChange} className="w-full bg-slate-950 border border-white/10 rounded px-3 py-2 text-white text-sm" />
                                             </div>
+                                        </div>
+                                         <div>
+                                            <label className="block text-slate-400 text-xs font-medium mb-1">Foto Kantor (Footer)</label>
+                                            <div className="flex items-center gap-2">
+                                                 <ImageIcon size={14} className="text-slate-500" />
+                                                 <input name="contactImage" value={editorState.contact.contactImage || ''} onChange={handleContactChange} placeholder="URL Foto Gedung / Kantor" className="w-full bg-slate-950 border border-white/10 rounded px-3 py-2 text-white text-sm" />
+                                            </div>
+                                            {editorState.contact.contactImage && (
+                                                <img src={editorState.contact.contactImage} alt="Preview" className="mt-2 h-24 w-full object-cover rounded border border-white/10 opacity-50" />
+                                            )}
+                                        </div>
+                                         <div>
+                                            <label className="block text-slate-400 text-xs font-medium mb-1">Foto Tambahan (Footer)</label>
+                                            <div className="flex items-center gap-2">
+                                                 <ImageIcon size={14} className="text-slate-500" />
+                                                 <input name="contactImage2" value={editorState.contact.contactImage2 || ''} onChange={handleContactChange} placeholder="URL Foto Tambahan / Sertifikat" className="w-full bg-slate-950 border border-white/10 rounded px-3 py-2 text-white text-sm" />
+                                            </div>
+                                            {editorState.contact.contactImage2 && (
+                                                <img src={editorState.contact.contactImage2} alt="Preview" className="mt-2 h-24 w-full object-contain rounded border border-white/10 opacity-50 bg-white/5" />
+                                            )}
                                         </div>
                                     </div>
 
@@ -1416,6 +1450,25 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                              <div className="p-6 border-t border-white/10 bg-white/5 rounded-b-2xl flex justify-end">
                                 <Button onClick={() => setViewUserDetail(null)}>Tutup</Button>
                              </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* ZOOM IMAGE MODAL */}
+                {zoomedImage && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm" onClick={() => setZoomedImage(null)}>
+                        <div className="relative max-w-4xl max-h-[90vh]">
+                            <button 
+                                onClick={() => setZoomedImage(null)}
+                                className="absolute -top-10 right-0 text-white hover:text-red-500 transition-colors"
+                            >
+                                <X size={24} />
+                            </button>
+                            <img 
+                                src={zoomedImage} 
+                                alt="Zoomed Preview" 
+                                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10"
+                            />
                         </div>
                     </div>
                 )}

@@ -35,11 +35,14 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('landing')}
         >
             {/* LOGO SIZE INCREASED: h-12 to h-14/16 */}
-            <img 
-                src={content.logoUrl} 
-                alt="Unity Group" 
-                className="h-12 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
-            />
+            <div className="relative">
+                <img 
+                    src={content.logoUrl} 
+                    alt="Unity Group" 
+                    className="h-12 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+                />
+                <span className="absolute -top-1 -right-3 text-[8px] md:text-[10px] text-slate-500 font-sans font-bold">TM</span>
+            </div>
             
             {/* FONT STYLE ADJUSTED: font-serif (Cinzel), text-2xl, wider tracking */}
             <div className="flex flex-col">

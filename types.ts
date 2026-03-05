@@ -76,6 +76,7 @@ export interface DocumentationItem {
 export interface WebsiteContent {
     // Global Settings
     logoUrl: string; // URL Logo Website
+    footerDescription: string; // Deskripsi singkat perusahaan di Footer
 
     hero: {
         tagline: string;
@@ -101,6 +102,8 @@ export interface WebsiteContent {
         address: string;
         email: string;
         phone: string;
+        contactImage?: string; // Foto Kantor / Gedung di Footer
+        contactImage2?: string; // Foto Tambahan di Footer
     };
     testimonials: TestimonialItem[];
     // Update: Tambahan Social Media

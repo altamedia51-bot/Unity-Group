@@ -27,16 +27,19 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <div className="mb-6 flex items-center gap-3">
                  {/* Logo Footer Bigger */}
-                 <img 
-                    src={content.logoUrl} 
-                    alt="Unity Group" 
-                    className="h-14 w-auto object-contain" 
-                />
+                 <div className="relative">
+                    <img 
+                        src={content.logoUrl} 
+                        alt="Unity Group" 
+                        className="h-14 w-auto object-contain" 
+                    />
+                    <span className="absolute -top-1 -right-3 text-[10px] text-slate-500 font-sans font-bold">TM</span>
+                 </div>
                 <span className="font-serif font-bold text-xl text-yellow-500 tracking-wider">UNITY GROUP</span>
             </div>
             
             <p className="text-slate-500 text-sm leading-relaxed mb-6">
-              Mitra terpercaya untuk solusi bisnis terintegrasi. Menghubungkan visi Anda dengan realitas kesuksesan melalui layanan profesional kelas dunia.
+              {content.footerDescription}
             </p>
             <div className="flex gap-4">
               {socialLinks.map((item, i) => (
@@ -97,6 +100,24 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <Phone className="text-yellow-500 shrink-0" size={18} />
                 <span className="text-slate-500 text-sm">{content.contact.phone}</span>
               </li>
+              {(content.contact.contactImage || content.contact.contactImage2) && (
+                  <li className="mt-6 flex flex-wrap gap-3">
+                      {content.contact.contactImage && (
+                          <img 
+                              src={content.contact.contactImage} 
+                              alt="Unity Group" 
+                              className="w-auto h-auto max-w-[150px] max-h-[70px] object-contain rounded border border-white/10 opacity-80 hover:opacity-100 transition-opacity"
+                          />
+                      )}
+                      {content.contact.contactImage2 && (
+                          <img 
+                              src={content.contact.contactImage2} 
+                              alt="Unity Group 2" 
+                              className="w-auto h-auto max-w-[150px] max-h-[70px] object-contain rounded border border-white/10 opacity-80 hover:opacity-100 transition-opacity"
+                          />
+                      )}
+                  </li>
+              )}
             </ul>
           </div>
         </div>

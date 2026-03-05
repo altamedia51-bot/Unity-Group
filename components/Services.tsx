@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowUpRight, Scale, Plane, Building2, Utensils, Laptop, X, CheckCircle2, MessageCircle, MoreHorizontal } from 'lucide-react';
+import { ArrowUpRight, Scale, Plane, Building2, Utensils, Laptop, X, CheckCircle2, MessageCircle, MoreHorizontal, Briefcase, FileText } from 'lucide-react';
 import { useContent } from '../contexts/ContentContext';
 import { ServiceItem } from '../types';
 import { Button } from './Button';
@@ -11,9 +11,35 @@ const Services: React.FC = () => {
   const [activeService, setActiveService] = useState<ServiceItem | null>(null);
 
   // Helper untuk mendapatkan icon
-  const getIcon = (id: string, size: number = 32) => {
+  const getIcon = (service: ServiceItem, size: number = 32) => {
       const className = `text-yellow-400`;
-      switch(id) {
+      const title = service.title.toLowerCase();
+      
+      // Deteksi berdasarkan Judul (Prioritas)
+      if (title.includes('pendirian') || title.includes('badan usaha') || title.includes('pt') || title.includes('cv')) {
+          return <Briefcase size={size} className={className} />;
+      }
+      if (title.includes('legal') || title.includes('izin') || title.includes('haki') || title.includes('sertifikat')) {
+          return <Scale size={size} className={className} />;
+      }
+      if (title.includes('travel') || title.includes('haji') || title.includes('umroh') || title.includes('tour') || title.includes('wisata')) {
+          return <Plane size={size} className={className} />;
+      }
+      if (title.includes('property') || title.includes('properti') || title.includes('konstruksi') || title.includes('bangunan') || title.includes('interior')) {
+          return <Building2 size={size} className={className} />;
+      }
+      if (title.includes('food') || title.includes('beverage') || title.includes('kuliner') || title.includes('catering') || title.includes('makan')) {
+          return <Utensils size={size} className={className} />;
+      }
+      if (title.includes('digital') || title.includes('website') || title.includes('seo') || title.includes('aplikasi') || title.includes('sosmed')) {
+          return <Laptop size={size} className={className} />;
+      }
+      if (title.includes('lain')) {
+          return <MoreHorizontal size={size} className={className} />;
+      }
+
+      // Fallback ke ID jika judul tidak cocok
+      switch(service.id) {
           case 'legal': return <Scale size={size} className={className} />;
           case 'travel': return <Plane size={size} className={className} />;
           case 'property': return <Building2 size={size} className={className} />;
@@ -57,7 +83,7 @@ const Services: React.FC = () => {
 
               <div className="relative z-10 flex flex-col h-full">
                 <div className="w-14 h-14 rounded-2xl bg-slate-900/50 border border-white/10 flex items-center justify-center mb-6 group-hover:border-yellow-500/30 transition-colors">
-                  {getIcon(service.id, 32)}
+                  {getIcon(service, 32)}
                 </div>
                 
                 <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-400 transition-colors">
@@ -103,7 +129,7 @@ const Services: React.FC = () => {
                   <div className="h-32 bg-gradient-to-r from-yellow-500/10 to-amber-600/10 relative overflow-hidden">
                       <div className="absolute top-1/2 left-8 -translate-y-1/2">
                            <div className="w-16 h-16 rounded-2xl bg-[#0a0a0a] border border-yellow-500/30 flex items-center justify-center shadow-lg">
-                                {getIcon(activeService.id, 40)}
+                                {getIcon(activeService, 40)}
                            </div>
                       </div>
                       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>

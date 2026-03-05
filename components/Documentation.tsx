@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContent } from '../contexts/ContentContext';
-import { Camera, Handshake, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
 
@@ -105,17 +105,6 @@ export const Documentation: React.FC = () => {
 
                         {/* Content Overlay */}
                         <div className="absolute bottom-0 left-0 w-full p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                            <div className="flex items-center gap-2 mb-3">
-                                {item.category === 'handover' ? (
-                                    <span className="px-3 py-1 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-lg shadow-blue-900/20">
-                                        Penyerahan
-                                    </span>
-                                ) : (
-                                    <span className="px-3 py-1 bg-yellow-500 text-black text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1 shadow-lg shadow-yellow-900/20">
-                                        <Handshake size={12} /> Kemitraan
-                                    </span>
-                                )}
-                            </div>
                             <h3 className="text-white font-bold text-lg leading-tight mb-2 line-clamp-2 group-hover:text-yellow-400 transition-colors">
                                 {item.caption}
                             </h3>

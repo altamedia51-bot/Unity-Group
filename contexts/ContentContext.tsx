@@ -17,6 +17,7 @@ import {
 
 const defaultContent: WebsiteContent = {
     logoUrl: "https://placehold.co/100x100/EAB308/000000?text=U&font=montserrat", 
+    footerDescription: "Mitra terpercaya untuk solusi bisnis terintegrasi. Menghubungkan visi Anda dengan realitas kesuksesan melalui layanan profesional kelas dunia.",
     hero: {
         tagline: "🚀 Solusi Bisnis Terintegrasi No. 1",
         headline: "Mitra Strategis Masa Depan Bisnis Anda",
@@ -60,7 +61,9 @@ const defaultContent: WebsiteContent = {
     contact: {
         address: "Jl. Jendral Sudirman Kav. 52-53, SCBD, Jakarta Selatan",
         email: "info@unitygroup.id",
-        phone: "+62 21 5555 8888"
+        phone: "+62 21 5555 8888",
+        contactImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+        contactImage2: "" 
     },
     socialMedia: {
         instagram: "https://instagram.com",
